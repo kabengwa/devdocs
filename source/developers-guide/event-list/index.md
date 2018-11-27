@@ -1354,3 +1354,65 @@ stdClass Object
         )
 )
 ```
+
+## Theme_Inheritance_Template_Directories_Collected
+
+### Definition
+```
+public function getTemplateDirectories(Shop\Template $template)
+{
+    $directories = $this->getTemplateDirectoriesRecursive(
+        $template->getId(),
+        $this->fetchTemplates()
+    );
+
+    $directories = $this->eventManager->filter(
+        'Theme_Inheritance_Template_Directories_Collected',
+        $directories,
+        ['template' => $template]
+    );
+
+    return $directories;
+}
+```
+
+### Registration
+```
+public static function getSubscribedEvents()
+{
+    return [
+        'Theme_Inheritance_Template_Directories_Collected' => 'onCollectTemplateDirectories',
+    ];
+}
+```
+
+### Listener
+```
+public function onCollectTemplateDirectories(\Enlight_Event_EventArgs $args)
+{
+    /** @var $directories array */
+    $directories = $args->getReturn();
+
+    /** @var $template \Shopware\Models\Shop\Template */
+    $template = $args->get('template');
+
+    $args->setReturn($directories);
+}
+```
+
+### Arguments dump
+```
+stdClass object
+(
+    [__CLASS__] => Enlight_Event_EventArgs
+    [_processed] => 
+    [_name] => Theme_Inheritance_Template_Directories_Collected
+    [_return] => Array (
+        [0] => /var/www/html/shopware_git/themes/Frontend/Responsive
+        [1] => /var/www/html/shopware_git/themes/Frontend/Bare
+    )
+    [_elements] => Array(
+        [template] => Shopware\Models\Shop\Template
+    )
+)
+```
