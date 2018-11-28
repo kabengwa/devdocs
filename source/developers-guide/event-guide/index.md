@@ -26,7 +26,7 @@ event and push those information to the ERP.
 ### Important terms
 
 * Event
-    * A generic information that *something* happened. Usually a event consists of a *name* and a *payload*, in the example
+    * A generic information that *something* happened. Usually an event consists of a *name* and a *payload*, in the example
     above the name was `ORDER_FINISHED` and the payload was `AMOUNT: 300; PRODUCTS: [SW-123, SW-456]`. Depending on the 
     event system, the payload can be an object, an array or any other data type.
 * emit
